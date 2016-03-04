@@ -7,4 +7,4 @@ ScratchX.org extension:
 
 
 
-/index.html: The file for the GitHub page.
+//index.html: The file for the GitHub page.
