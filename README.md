@@ -1,6 +1,6 @@
-# ScratchXtensions 
+# 
  
-//This repository is for the safety, storage location, preservation, and collaboration for creating and testing new experimental extensions on ScratchX.org
+//This repository is for the safety, storage location, preservation, and collaboration for creating and testing new experimental extensions.
 
 
 
