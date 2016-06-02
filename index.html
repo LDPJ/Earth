@@ -58,6 +58,12 @@ var myGameArea = {
 function component(width, height, color, x, y, type) {
 
     this.type = type;
+    
+     if (type == "image") {
+    this.image = new Image();
+    this.image.src = color;
+  }
+    
     this.width = width;
     this.height = height;
     this.speed = 0;
@@ -67,6 +73,14 @@ function component(width, height, color, x, y, type) {
     this.y = y;    
     this.update = function() {
         ctx = myGameArea.context;
+        
+         if (type == "image") {
+      ctx.drawImage(this.image,
+        this.x,
+        this.y,
+        this.width, this.height);
+    } else {
+        
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
