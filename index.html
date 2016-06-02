@@ -5,7 +5,14 @@
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 
 
+
 <style>                                                                     // aka Stylesheet.css 
+div {
+    width: 500px;
+    height: 400px;
+    margin: 24px 0;
+    padding: 16px;
+}
 canvas {
     border:5px solid #d3d3d3;
     background-color: #f1f1f1;
@@ -16,7 +23,7 @@ canvas {
 
 
 <body onload="startGame()">
-
+<div class="w3-card-8">
 <script>
 
 var myGamePiece;
@@ -91,10 +98,11 @@ function updateGameArea() {
 }
 
 </script>
-
+</div>
 <div class ="w3-container w3-teal">
 <p>Make sure the gamearea has focus, and use the arrow keys to move the red square around.</p>
 </div>
+
 
 </body>
 </html>
