@@ -1,171 +1,67 @@
 <!DOCTYPE html>
 <html>
-<h1> Title Here </h1>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<body class="w3-container">
 
-<style>                                                                   
-canvas {
-    width: 500;
-    height: 500;
-    border:5px solid #d3d3d3;
-    background-color: #f1f1f1;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    margin-right: 150px;
-    margin-left: 80px;
-}
-</style>
+<h3>Difference between w3-row and w3-row-padding</h3>
+<p>The w3-row class defines a padded-less container, while the w3-row-padding class adds a 8px left and right padding to each column:</p>
 
-<body>
-  
 
-var canvas;
-var context;
-var images = {};
-var totalResources = 6;
-var numResourcesLoaded = 0;
-var fps = 30;
-var x = 245;
-var y = 185;
-var breathInc = 0.1;
-var breathDir = 1;
-var breathAmt = 0;
-var breathMax = 2;
-var breathInterval = setInterval(updateBreath, 1000 / fps);
-var maxEyeHeight = 14;
-var curEyeHeight = maxEyeHeight;
-var eyeOpenTime = 0;
-var timeBtwBlinks = 4000;
-var blinkUpdateTime = 200;                    
-var blinkTimer = setInterval(updateBlink, blinkUpdateTime);
-var fpsInterval = setInterval(updateFPS, 1000);
-var numFramesDrawn = 0;
-var curFPS = 0;
+<p>Row #1: Container #2 </p>  
+<div class="w3-row-padding">
+  <div class="w3-col s11">
+    <img src="img_nature.jpg" style="width:100%">
+  </div>
+ </div>
 
-function updateFPS() {
-	
-	curFPS = numFramesDrawn;
-	numFramesDrawn = 0;
-}		
-function prepareCanvas(canvasDiv, canvasWidth, canvasHeight)
-{
-	// Create the canvas (Neccessary for IE because it doesn't know what a canvas element is)
-	canvas = document.createElement('canvas');
-	canvas.setAttribute('width', canvasWidth);
-	canvas.setAttribute('height', canvasHeight);
-	canvas.setAttribute('id', 'canvas');
-	canvasDiv.appendChild(canvas);
-	
-	if(typeof G_vmlCanvasManager != 'undefined') {
-		canvas = G_vmlCanvasManager.initElement(canvas);
-	}
-	context = canvas.getContext("2d"); // Grab the 2d canvas context
-	// Note: The above code is a workaround for IE 8and lower. Otherwise we could have used:
-	//     context = document.getElementById('canvas').getContext("2d");
-	
-	loadImage("leftArm");
-	loadImage("legs");
-	loadImage("torso");
-	loadImage("rightArm");
-	loadImage("head");
-	loadImage("hair");
-}
+<p>Row #2: Container #2</p>  
+<div class="w3-row-padding">
+  <div class="w3-col s3">
+    <img src="img_lights.jpg" style="width:100%">
+  </div>
+  <div class="w3-col s8">
+    <img src="img_nature.jpg" style="width:100%">
+  </div>
+ </div>
 
-function loadImage(name) {
 
-  images[name] = new Image();
-  images[name].onload = function() { 
-	  resourceLoaded();
-  }
-  images[name].src = "images/" + name + ".png";
-}
+<p>Row #3: Container #2</p>  
+<div class="w3-row-padding">
+  <div class="w3-col s3">
+    <img src="img_lights.jpg" style="width:100%">
+  </div>
+  <div class="w3-col s5">
+    <img src="img_nature.jpg" style="width:100%">
+  </div>
+  <div class="w3-col s3">
+    <img src="img_fjords.jpg" style="width:100%">
+  </div>
+</div>
 
-function resourceLoaded() {
 
-  numResourcesLoaded += 1;
-  if(numResourcesLoaded === totalResources) {
-  
-	setInterval(redraw, 1000 / fps);
-  }
-}
+<p>Row #4: Container #2</p>  
+<div class="w3-row-padding">
+  <div class="w3-col s3">
+    <img src="img_lights.jpg" style="width:100%">
+  </div>
+  <div class="w3-col s5">
+    <img src="img_nature.jpg" style="width:100%">
+  </div>
+  <div class="w3-col s3">
+    <img src="img_fjords.jpg" style="width:100%">
+  </div>
+</div>
 
-function redraw() {
-				
-  canvas.width = canvas.width; // clears the canvas 
-
-  drawEllipse(x + 40, y + 29, 160 - breathAmt, 6); // Shadow
-
-  context.drawImage(images["leftArm"], x + 40, y - 42 - breathAmt);
-  context.drawImage(images["legs"], x, y);
-  context.drawImage(images["torso"], x, y - 50);
-  context.drawImage(images["head"], x - 10, y - 125 - breathAmt);
-  context.drawImage(images["hair"], x - 37, y - 138 - breathAmt);
-  context.drawImage(images["rightArm"], x - 15, y - 42 - breathAmt);
-	
-  drawEllipse(x + 47, y - 68 - breathAmt, 8, curEyeHeight); // Left Eye
-  drawEllipse(x + 58, y - 68 - breathAmt, 8, curEyeHeight); // Right Eye
-  
-  context.font = "bold 12px sans-serif";
-  context.fillText("fps: " + curFPS + "/" + fps + " (" + numFramesDrawn + ")", 40, 200);
-  ++numFramesDrawn;
-}
-
-function drawEllipse(centerX, centerY, width, height) {
-
-  context.beginPath();
-  
-  context.moveTo(centerX, centerY - height/2);
-  
-  context.bezierCurveTo(
-	centerX + width/2, centerY - height/2,
-	centerX + width/2, centerY + height/2,
-	centerX, centerY + height/2);
-
-  context.bezierCurveTo(
-	centerX - width/2, centerY + height/2,
-	centerX - width/2, centerY - height/2,
-	centerX, centerY - height/2);
- 
-  context.fillStyle = "black";
-  context.fill();
-  context.closePath();	
-}
-
-function updateBreath() { 
-				
-  if (breathDir === 1) {  // breath in
-	breathAmt -= breathInc;
-	if (breathAmt < -breathMax) {
-	  breathDir = -1;
-	}
-  } else {  // breath out
-	breathAmt += breathInc;
-	if(breathAmt > breathMax) {
-	  breathDir = 1;
-	}
-  }
-}
-
-function updateBlink() { 
-				
-  eyeOpenTime += blinkUpdateTime;
-	
-  if(eyeOpenTime >= timeBtwBlinks){
-	blink();
-  }
-}
-
-function blink() {
-
-  curEyeHeight -= 1;
-  if (curEyeHeight <= 0) {
-	eyeOpenTime = 0;
-	curEyeHeight = maxEyeHeight;
-  } else {
-	setTimeout(blink, 10);
-  }
-}
-
+<p>Row #5: Container #4 (Footer?)</p>  
+<div class="w3-row-padding">
+  <div class="w3-col s8">
+    <img src="img_lights.jpg" style="width:100%">
+  </div>
+  <div class="w3-col s3">
+    <img src="img_nature.jpg" style="width:100%">
+  </div>
+ </div>
 </body>
 </html>
