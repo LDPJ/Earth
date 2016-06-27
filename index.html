@@ -56,6 +56,14 @@
 <p>Paragraph 2.</p>
 <div id="world">
     
+    map = THREE.ImageUtils.loadTexture('../texturez/proxy.php?url=http://www.psdgraphics.com/file/2016/gold-foil-texture.jpg');
+geometry = new THREE.SphereGeometry(150, 100, 100);
+material = new THREE.MeshBasicMaterial({shading: THREE.FlatShading, color: 0xdcdcdc, map: map});
+mesh = new THREE.Mesh(geometry, material);
+map.wrapS = map.wrapT = THREE.RepeatWrapping;
+map.repeat.set( 1, 1 );
+scene.add(mesh);
+
     
     
 </div>
