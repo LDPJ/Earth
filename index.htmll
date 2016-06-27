@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+    <head>
+
+
+  <!--
+    _______      _______  __   __  _______  ___      ___        _______  _______  __   __  _______
+    |   _   |    |       ||  |_|  ||   _   ||   |    |   |      |       ||   _   ||  |_|  ||       |
+    |  |_|  |    |  _____||       ||  |_|  ||   |    |   |      |    ___||  |_|  ||       ||    ___|
+    |       |    | |_____ |       ||       ||   |    |   |      |   | __ |       ||       ||   |___
+    |       |    |_____  ||       ||       ||   |___ |   |___   |   ||  ||       ||       ||    ___|
+    |   _   |     _____| || ||_|| ||   _   ||       ||       |  |   |_| ||   _   || ||_|| ||   |___
+    |__| |__|    |_______||_|   |_||__| |__||_______||_______|  |_______||__| |__||_|   |_||_______|
+
+    PROJECT: KID DISCO
+    CREDITS: CHRISTIAN ÖSTMAN & RICHARD ÅSTRÖM
+    MUSIC: BOY VS BACTERIA
+    CONTACT: info@asmallgame.com
+
+    THANKS:
+    mr.doob
+    Luddo and Patsy for testing
+
+
+    Built with:
+    threeJS
+    ChipmunkJS
+    Typescript
+    TweenMax
+    PreloadJS
+    gamepad.js
+
+      YEAAAAA!
+    -->
+
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Kid Disco Beta 0.9</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta property="og:image" content="http://www.asmallgame.com/kiddisco/share.png"/>
+        <meta property="og:title" content="Kid Disco"/>
+        <meta property="og:type" content="game"/>
+
+    <meta name="description" content="Kid Disco is a game with music by Boy vs Bacteria. It's playable in your browser using webGL. (Chrome, Firefox, Safari, IE11+). HOORAY!">
+        <meta property="og:description" content="Kid Disco is a game with music by Boy vs Bacteria. It's playable in your browser using webGL. (Chrome, Firefox, Safari, IE11+). HOORAY!">
+
+    <link rel="icon"
+          type="image/ico"
+          href="assets/favicon.ico">
+        <style>
+            html,body{
+                background-color: #000000;
+                width:100%;
+                height: 100%;
+                font-family: 'Francois One', sans-serif;
+                overflow: hidden;
+            }
+            body{visibility:hidden;
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            hr {color:sienna;}
+            p, span{
+                 font-family: 'Francois One',Helvetica, sans-serif;
+                line-height: 1em;
+                color: #ffffff;
+                font-size: 30px;
+              
+            }
+
+            span
+            {
+                color:#ffffff
+                ;
+               /*   text-shadow: 0 0 80px white,
+                 0 0 50px #00fffc,
+                 0 0 150px #00fffc,
+                 0 0 5px #00fffc;    */
+                font-size:16px;
+           
+            }
+            .threeD {
+
+                font-family: 'Helvetica Neue',Helvetica, sans-serif;
+                line-height: 1em;
+                color: #00ff00;
+                font-weight:bold;
+                font-size: 134px;
+                text-shadow:0px 0px 0 rgb(231,231,231),1px 1px 0 rgb(216,216,216),2px 2px 0 rgb(202,202,202),3px 3px 0 rgb(187,187,187),4px 4px 0 rgb(173,173,173),5px 5px 0 rgb(158,158,158), 6px 6px 0 rgb(144,144,144),7px 7px 6px rgba(0,0,0,0.6),7px 7px 1px rgba(0,0,0,0.5),0px 0px 6px rgba(0,0,0,.2);}
+
+            }
+
+            .menu
+            {
+                position: absolute;
+                left:0px;
+                top:0px;
+                width: 100%;
+                height: 100%;
+                background-color: #000000;
+                color:#ffffff;
+                overflow: hidden;
+            }
+</style>
+
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+
+    </head>
+    <body onLoad="checkWebGL();initAll()" style="background-color:#000000;margin:0;padding:0;overflow:hidden;height:100%;width:100%;">
+    <div id="fb-root"></div>
+
+       <div style="width:100%;height:100%;background-color:#000000;position:absolute;top:0px;left:0px;overflow: hidden;
+" >
+        <canvas style="display:hidden;opacity: 0" id="canvas" width="1000" height="500" > </canvas>
+        </div>
+     
+         <script>
+
+
+
+             (function(){
+
+                 // prepare base perf object
+                 if (typeof window.performance === 'undefined') {
+                     window.performance = {};
+                 }
+
+                 if (!window.performance.now){
+
+                     var nowOffset = Date.now();
+
+                     if (performance.timing && performance.timing.navigationStart){
+                         nowOffset = performance.timing.navigationStart
+                     }
+
+
+                     window.performance.now = function now(){
+                         return Date.now() - nowOffset;
+                     }
+
+                 }
+
+             })();
+
+
+
+
+
+
+         </script>t
+
+    <script src="js/libs/modernizr.js"></script>
+
+    <script src="js/libs/three.min.js"></script>
+  <!--  <script src="js/libs/cp.min.js"></script>
+    <script src="js/libs/preloadjs-0.4.0.min.js"></script>
+     <script src="js/libs/TweenMax.min.js"></script> -->
+
+    <script src="js/libs/shaders/all.min.js"></script>
+
+    <!--
+        <script src="js/libs/shaders/CopyShader.js"></script>
+        <script src="js/libs/shaders/DotScreenShader.js"></script>
+        <script src="js/libs/shaders/RGBShiftShader.js"></script>
+        <script src="js/libs/shaders/ConvolutionShader.js"></script>
+        <script src="js/libs/shaders/CopyShader.js"></script>
+        <script src="js/libs/shaders/FilmShader.js"></script>
+        <script src="js/libs/shaders/SSAOShader.js"></script>
+        <script src="js/libs/shaders/VignetteShader.js"></script>           -->
+
+
+        <script src="js/libs/postprocessing/all.min.js"></script>
+    <!--
+        <script src="js/libs/postprocessing/RenderPass.js"></script>
+        <script src="js/libs/postprocessing/MaskPass.js"></script>
+        <script src="js/libs/postprocessing/BloomPass.js"></script>
+        <script src="js/libs/postprocessing/FilmPass.js"></script>
+        <script src="js/libs/postprocessing/ShaderPass.js"></script>
+        <script src="js/libs/CSS3DRenderer.js"></script>
+                <script src="js/libs/ShaderExtras.js"></script>
+        <script src="js/libs/gamepad.js"></script>
+        <script src="js/libs/screenfull.js"></script>  -->
+
+    <script src="js/libs/libs.js"></script>
+
+
+    <script src="js/project.js"></script>
+
+
+
+
+         <div id="menu" class="menu" style="display:hidden;color:#ffffff;position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:#000000">
+
+               <!-- <p style="font-size:18px;margin-bottom:8px;"> A SMALL GAME PRESENTS</p>
+                <h1 style="width:100%;position:absolute;">KID DISCO</h1>
+                <p style="font-size:24px;width:100%;position:absolute;color:black;top:94px;left:0px;">0.5 ALPHA</p>-->
+
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+
+                <div class='pacman' id="pacman"> </div>
+                    <p id="loadText">LOADING</p>
+        </div>
+
+    <div id="share" style="position:absolute;bottom:0px;background-color:rgba(0,0,0,0.7);width: 100%; height: 35px;" />
+    <div class="fb-like" style="z-index:100;margin-right:5px;margin-left:5px;margin-top: 5px;" data-href="http://www.asmallgame.com/kiddisco" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+    <a style="z-index: 100;" href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.asmallgame.com/kiddisco" data-via="asmallgame">Tweet</a>
+    <span style="pointer-events:none;width:100%;height:100%;text-align: center; margin: auto auto;">NEWS : First version, welcome to kid disco. Have any suggestions? <a style="color: #ffffff" href="mailto:info@asmallgame.com">Contact us!</a></span>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </div>
+
+    <img width=60 src="assets/tvlogo.png" style="opacity:0.8;position:absolute;right:10px;top:10px;"/>
+
+    <img id="title" src="assets/tvtext.png" style="width:50%;opacity:0;position:absolute;left:10px;bottom:20px;"/>
+    <img id="full" src="assets/fullscreen.png" width="30" style="cursor:pointer;position:absolute; right:7px; bottom:5px" />
+
+     <span id="pause" style="text-shadow: -2px 1px 30px rgba(0, 0, 0, 1);visibility:hidden;font-size:50px;top:300px;position:absolute;margin-left: auto;margin-right: auto; width: 100%; text-align: center"> PAUSED - CLICK TO START</span>
+
+    <script>
+
+
+        function checkWebGL()
+        {
+            var canvasID = 'canvas',
+                canvas = document.getElementById(canvasID),
+                gl,
+                glExperimental = false;
+
+        function hasWebGL() {
+            try { gl = canvas.getContext("webgl"); }
+            catch (x) { gl = null; }
+
+            if (gl === null) {
+                try { gl = canvas.getContext("experimental-webgl"); glExperimental = true; }
+                catch (x) { gl = null; }
+            }
+
+            if(gl) { return true; }
+            else if ("WebGLRenderingContext" in window) { return true; } // not a best way, as you're not 100% sure, so you can change it to false
+            else { return false; }
+        }
+             var detector = { webgl: ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )()}
+        if(!detector.webgl)
+        {
+           // window.location.assign("nowebgl.html");
+             window.location.href = "http://www.asmallgame.com/kiddisco/nowebgl.html"
+        }
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-45697789-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=465881243471710";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+
+    </body>
+</html>
