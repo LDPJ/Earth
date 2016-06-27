@@ -33,16 +33,73 @@
 	background: linear-gradient(#e4e0ba, #f7d9aa);
 }
 
+body {
+				background-color: #ffffff;
+				margin: 0;
+				overflow: hidden;
+			}
+			
+			
+
 </style>
 </head>
 <body>
+	
 
 <div class="header">
 <h1>Header</h1>
 </div>
 
 <div class="menu">
-<ul>
+<ul><script src="http://brangerbriz.net/labs/threejs_playGnd/js/three.min.js"></script>
+		<script src="http://brangerbriz.net/labs/threejs_playGnd/js/Detector.js"></script>
+		<script>
+
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+			
+			var camera, scene, renderer;
+			var geometry, material, mesh;
+
+			function setup() {
+
+				var W = window.innerWidth, H = window.innerHeight;
+				renderer = new THREE.WebGLRenderer();
+				renderer.setSize( W, H );
+				document.body.appendChild( renderer.domElement );
+
+				camera = new THREE.PerspectiveCamera( 50, W/H, 1, 10000 );
+				camera.position.z = 500;
+
+				scene = new THREE.Scene();
+				
+				map = THREE.ImageUtils.loadTexture('../texturez/proxy.php?url=http://www.psdgraphics.com/file/2016/gold-foil-texture.jpg');
+geometry = new THREE.SphereGeometry(150, 100, 100);
+material = new THREE.MeshBasicMaterial({shading: THREE.FlatShading, color: 0xdcdcdc, map: map});
+mesh = new THREE.Mesh(geometry, material);
+map.wrapS = map.wrapT = THREE.RepeatWrapping;
+map.repeat.set( 1, 1 );
+scene.add(mesh);
+
+				
+				// paste your code from the geometryGUI here
+
+
+			}
+
+			function draw() {
+
+				requestAnimationFrame( draw );
+				
+				// experiment with code from the snippets menu here
+
+				renderer.render( scene, camera );
+
+			}
+
+			setup();
+			draw();
+
+		</script>
 <li>1</li>
 <li>2</li>
 <li>3</li>
@@ -56,14 +113,7 @@
 <p>Paragraph 2.</p>
 <div id="world">
     
-    map = THREE.ImageUtils.loadTexture('../texturez/proxy.php?url=http://www.psdgraphics.com/file/2016/gold-foil-texture.jpg');
-geometry = new THREE.SphereGeometry(150, 100, 100);
-material = new THREE.MeshBasicMaterial({shading: THREE.FlatShading, color: 0xdcdcdc, map: map});
-mesh = new THREE.Mesh(geometry, material);
-map.wrapS = map.wrapT = THREE.RepeatWrapping;
-map.repeat.set( 1, 1 );
-scene.add(mesh);
-
+  
     
     
 </div>
