@@ -4,57 +4,107 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script type="text/javascript" src="js/three.js">
 </head>
-<body>
-	<script src="http://brangerbriz.net/labs/threejs_playGnd/js/three.min.js"></script>
-		<script src="http://brangerbriz.net/labs/threejs_playGnd/js/Detector.js"></script>
-		<script>
+<style>
+#world {
+	position: absolute;
+	width: 100%
+	height: 100%
+	overflow: hidden;
+	background: linear-gradient(#e4e0ba, #f7d9aa);
+}
+</style>
+<html>
+var Colors = {
+	red:
+	white:
+	brown:
+	pink:
+	brownDark:
+	blue:
+}
+window.addEventListener('load', init, false);
 
-			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-			
-			var camera, scene, renderer;
-			var geometry, material, mesh;
+function init(){
+	//set up the scene, camera, and the renderer
+	create Scene();
+	var scene,
+		camera, fieldOfView, aspectRatio, nearPlane, farPlane, HEIGHT, WIDTH,
+		renderer, container;
 
-			function setup() {
+function createScene() {
+	// Get the width and the height of the screen,
+	// use them to set up the aspect ratio of the camera 
+	// and the size of the renderer.
+	HEIGHT = window.innerHeight;
+	WIDTH = window.innerWidth;
 
-				var W = window.innerWidth, H = window.innerHeight;
-				renderer = new THREE.WebGLRenderer();
-				renderer.setSize( W, H );
-				document.body.appendChild( renderer.domElement );
+	// Create the scene
+	scene = new THREE.Scene();
 
-				camera = new THREE.PerspectiveCamera( 50, W/H, 1, 10000 );
-				camera.position.z = 500;
+	// Add a fog effect to the scene; same color as the
+	// background color used in the style sheet
+	scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
+	
+	// Create the camera
+	aspectRatio = WIDTH / HEIGHT;
+	fieldOfView = 60;
+	nearPlane = 1;
+	farPlane = 10000;
+	camera = new THREE.PerspectiveCamera(
+		fieldOfView,
+		aspectRatio,
+		nearPlane,
+		farPlane
+		);
+	
+	// Set the position of the camera
+	camera.position.x = 0;
+	camera.position.z = 200;
+	camera.position.y = 100;
+	
+	// Create the renderer
+	renderer = new THREE.WebGLRenderer({ 
+		// Allow transparency to show the gradient background
+		// we defined in the CSS
+		alpha: true, 
 
-				scene = new THREE.Scene();
-				
-				map = THREE.ImageUtils.loadTexture('../texturez/proxy.php?url=http://www.dezineguide.com/wp-content/uploads/2013/07/gold_2_by_henker144-d2y2a021.jpg');
-geometry = new THREE.SphereGeometry(150, 100, 100);
-material = new THREE.MeshBasicMaterial({shading: THREE.FlatShading, color: 0xdcdcdc, map: map});
-mesh = new THREE.Mesh(geometry, material);
-map.wrapS = map.wrapT = THREE.RepeatWrapping;
-map.repeat.set( 1, 1 );
-scene.add(mesh);
+		// Activate the anti-aliasing; this is less performant,
+		// but, as our project is low-poly based, it should be fine :)
+		antialias: true 
+	});
 
-				
-				// paste your code from the geometryGUI here
+	// Define the size of the renderer; in this case,
+	// it will fill the entire screen
+	renderer.setSize(WIDTH, HEIGHT);
+	
+	// Enable shadow rendering
+	renderer.shadowMap.enabled = true;
+	
+	// Add the DOM element of the renderer to the 
+	// container we created in the HTML
+	container = document.getElementById('world');
+	container.appendChild(renderer.domElement);
+	
+	// Listen to the screen: if the user resizes it
+	// we have to update the camera and the renderer size
+	window.addEventListener('resize', handleWindowResize, false);
+}
+	
+	//add the lights
+	createLights();
+	
+	//add the objects
+	createPlane();
+	createSea();
+	createSky();
+	//start a loop that will update the objects' positions
+	// and render the scene on each frame
+	loop();
+}
+}
+
+<div id ="world">
 
 
-			}
-
-			function draw() {
-
-				requestAnimationFrame( draw );
-				
-				camera.position.x = Math.sin( Date.now() * 0.002 ) * 50;
-				
-				// experiment with code from the snippets menu here
-
-				renderer.render( scene, camera );
-
-			}
-
-			setup();
-			draw();
-
-		</script>
-</body>
+</div>
 </html>
