@@ -8,3 +8,6 @@
 
 
 //index.html: The file for the GitHub page (  http://ldpj.github.io/Earth/  )
+
+
+//Currently practicing with WebGL
