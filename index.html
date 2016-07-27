@@ -1,1 +1,113 @@
+// Initialize WebGl, canvas element, shaders, and buffers.  
+//
+// Sets up 'clear canvas' and 'depth testing' methods on a gl object.
+//
+// Draws a triangle and a square, using the buffers.
 
+  function webGLStart() {
+    var canvas = document.getElementById("lesson01-canvas");
+    initGL(canvas);
+    initShaders();
+    initBuffers();
+
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.enable(gl.DEPTH_TEST);
+
+    drawScene();
+  }
+
+
+
+
+// Declare two global variable to hold the buffers.
+
+  var triangleVertexPositionBuffer;
+  var squareVertexPositionBuffer;
+
+
+// Create a buffer for the triangle's vertex positions.
+//
+//Instructs WebGL that any following operations that act on buffers should use the one we specify.
+//
+//Define our vertex positions as a JavaScript list (the centre of the isosceles triangle is at (0,0,0)).
+//
+//Create Float32Array object (based on the vertices JS list) and instructing WebGL to use it to fill the triangleVertexPositionBuffer).
+//
+//Set two new properties on the buffer.  Now the buffer is set up for the triangle!
+//
+//Repeat for the Square.  The square has four vertex positions, thus the array will be bigger and the numItems will be increased.
+
+  function initBuffers() {
+    triangleVertexPositionBuffer = gl.createBuffer();
+    
+    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer); 
+    
+    var vertices = [
+                    0.0, 1.0, 0.0,
+                   -1.0,-1.0, 0.0,
+                    1.0,-1.0, 0.0
+                    ];
+                    
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices) gl.STATIC_DRAW);
+    
+   triangleVertexPositionBuffer.itemSize = 3;
+   triangleVertexPositionBuffer.numItems = 3;
+
+   squareVertexPositionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
+     vertices = [
+         1.0,  1.0,  0.0,
+        -1.0,  1.0,  0.0,
+         1.0, -1.0,  0.0,
+        -1.0, -1.0,  0.0
+     ];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+     squareVertexPositionBuffer.itemSize = 3;
+     squareVertexPositionBuffer.numItems = 4;
+  }
+  
+  
+  
+  
+// Instruct WebGL about the size of the canvas using the viewport function.
+//
+// Clear the canvas.
+//
+// Perspective setup: (vertical) field of view is 45°; canvas' aspect ratio; remove objects closer than 0.1 and farther than 100 units.)
+//
+// Set up the identity matrix (4x4) and model-vew matrix to represent all of the transformations in one (in OpenGL).
+//
+// Draw the triangle on the left-hand side of the canvas. 
+// mat4.translate menas "multiply the given matrix by a translation matrix with the following parameters (x,y,z)."
+// Moving 1.5 units to the left (x-axis) and seven units into the scene (z-axis). 
+//
+// Specify the triangleVertexPositionBuffer, then instructing WebGL that the values in it should be used for vertex positions.
+//
+//
+
+function drawScene() {
+  gl.viewport(0,0,gl.viewportWidth,gl.viewportHeight);
+  
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  
+  mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0 pMatrix);
+  
+  mat4.identity(myMatrix);
+  
+  mat4.translate(mvMatrix, [-1.5, 0.0, -7.0]);
+  
+  gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
+  gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+  
+  setMatrixUniforms
+
+// Below is the complete body of the page.
+
+<body onload="webGLStart();">
+  <a href="http://learningwebgl.com/blog/?p=28">&lt;&lt; Back to Lesson 1</a><br />
+
+  <canvas id="lesson01-canvas" style="border: none;" width="500" height="500"></canvas>
+
+  <br/>
+  <a href="http://learningwebgl.com/blog/?p=28">&lt;&lt; Back to Lesson 1</a><br />
+</body>
