@@ -83,7 +83,19 @@
 //
 // Specify the triangleVertexPositionBuffer, then instructing WebGL that the values in it should be used for vertex positions.
 //
+// Instruct WebGL to take account of our current model-vew matrix and also the projection matrix (in OpenGL).
 //
+// Draw the array of vertices as triangles, starting with item 0 in the array and going up to the numItems.  The triangle is now drawn!
+//
+// Draw the square.  
+// Start by moving the model-view matrix three units to the right.
+//
+// This positions the mvMatrix 1.5 to the right(x-axis) and 7 away(z-axis).
+//
+// Instruct WebGL to use our square's buffer for its vertex positions.
+// Take account of the current model-view matrix and projection matrices (so that the last mvTranslate is accounted for).
+// Draw the array of vertices earlier as a strip of triangles, as a quicker way of specifying a square.
+// The drawScene function is complete!
 
 function drawScene() {
   gl.viewport(0,0,gl.viewportWidth,gl.viewportHeight);
@@ -99,7 +111,18 @@ function drawScene() {
   gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
   gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
   
-  setMatrixUniforms
+  setMatrixUniforms();
+  
+  gl.drawArrays(gl.TRIANGLES, 0, triangleVertexPositionBuffer.numItems);
+  
+  mat4.translate(mvMatrix, [3.0, 0.0, 0.0]);
+  
+  gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
+  gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, squareVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+  setMatrixUniforms();
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, squareVertexPositionBuffer.numItems);
+  }
+  
 
 // Below is the complete body of the page.
 
