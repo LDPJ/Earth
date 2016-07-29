@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   
   <head>
     <meta http-equiv ="content-type" content="text/html; charset=UTF-8" / >
@@ -20,9 +20,6 @@
     }
   }
   
-
-var mvMatrix = mat4.create();
-var pMatrix = mat4.create();
 
  var shaderProgram;
   function initShaders() {
@@ -81,6 +78,10 @@ function getShader(gl, id) {
 
       return shader;
   }
+  
+  
+  var mvMatrix = mat4.create();
+  var pMatrix = mat4.create();
   
 
     function setMatrixUniforms() {
