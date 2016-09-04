@@ -1,6 +1,19 @@
 var request;
 var $current;
-var cache = {};
+var cache = {
+  "cll/img/photo-1.jpg": {
+    "$img": jQuery object,
+    "isLoading": false
+  },
+  "cll/img/photo-2.jpg": {
+   "$img": jQuery object,
+   "isLoading": false
+  },
+  "cll/img/photo-3.jpg": {
+   "$img": jQuery object,
+   "isLoading": false
+  }
+};
 var $frame = $('#photo-viewer');
 var $thumbs = $('.thumb');
 
