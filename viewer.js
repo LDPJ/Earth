@@ -1,11 +1,11 @@
 var request;
 var $current;
 var cache = {
-  "cll/img/photo-1.jpg": {
+  "http://www.elektriker.lu/images/fotos/blitz_ueberspannungsschutz/blitz_ueberspannungsschutz1.jpg": {
     "$img": jQuery object,
     "isLoading": false
   },
-  "cll/img/photo-2.jpg": {
+  "https://www.planwallpaper.com/static/images/magic-of-blue-universe-images.jpg": {
    "$img": jQuery object,
    "isLoading": false
   },
