@@ -4,15 +4,4 @@ http://api.mediastack.com/v1/news
     ? access_key = ff5ee090da45cca55145606c580060c2
     & search = abc
 
-// optional parameters: 
-
-   // & sources = cnn,bbc
-   // & categories = business,sports
-   // & countries = us,au
-   // & languages = en,-de
-   // & keywords = virus,-corona
-   // & sort = published_desc
-   // & offset = 0
-   // & limit = 100 
-
 </body>
