@@ -1,6 +1,5 @@
-<div>
+
 http://api.mediastack.com/v1/sources
     ? access_key = ff5ee090da45cca55145606c580060c2
     & search = abc
-</div>
-</body>
+
