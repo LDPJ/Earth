@@ -1,3 +1,5 @@
+<body>
+
 http://api.mediastack.com/v1/news
     ? access_key = ff5ee090da45cca55145606c580060c2
     & search = abc
@@ -12,3 +14,5 @@ http://api.mediastack.com/v1/news
    // & sort = published_desc
    // & offset = 0
    // & limit = 100 
+
+</body>
